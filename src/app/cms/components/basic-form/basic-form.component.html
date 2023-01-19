@@ -1,0 +1,57 @@
+<div>
+  <p>Name: {{ nameField.value }}</p>
+  <input type="text" [formControl]="nameField" >
+  <button (click)="getNameValue()">Get Value</button>
+  <!-- <code>
+    <pre>{{ nameField | json }}</pre>
+  </code> -->
+</div>
+
+<div>
+  <p>Email: {{ emailField.value }}</p>
+  <input type="email" [formControl]="emailField" >
+</div>
+
+<div>
+  <p>Number: {{ numberField.value }}</p>
+  <input type="number" [formControl]="numberField" >
+</div>
+
+<div>
+  <p>Phone: {{ phoneField.value }}</p>
+  <input type="tel" [formControl]="phoneField" >
+</div>
+
+<div>
+  <p>Color: {{ colorField.value }}</p>
+  <input type="color" [formControl]="colorField" >
+</div>
+
+<div>
+  <p>Date: {{ dateField.value }}</p>
+  <input type="date" [formControl]="dateField" >
+</div>
+
+<div>
+  <p>Category: {{ categoryField.value }}</p>
+  <select [formControl]="categoryField">
+    <option value="category-1">Category 1</option>
+    <option value="category-2">Category 2</option>
+    <option value="category-3">Category 3</option>
+  </select>
+</div>
+
+<div>
+  <p>Tags: {{ tagField.value }}</p>
+  <select class="tag" [formControl]="tagField" multiple>
+    <option value="tag-1">tag 1</option>
+    <option value="tag-2">tag 2</option>
+    <option value="tag-3">tag 3</option>
+  </select>
+</div>
+
+<div>
+  <p>Agree: {{ agreeField.value }}</p>
+  <input type="checkbox" [formControl]="agreeField" >
+</div>
+
