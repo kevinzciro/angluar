@@ -1,35 +1,231 @@
-<div>
-  <p>Name: {{ nameField.value }}</p>
-  <input type="text" [formControl]="nameField" >
-  <button (click)="getNameValue()">Get Value</button>
-  <!-- <code>
-    <pre>{{ nameField | json }}</pre>
-  </code> -->
-</div>
 
-<div>
+<form [formGroup]="getForm" (ngSubmit)="save()">
+  <div>
+    <p>Name: {{ nameField?.value }}... {{ nameField?.valid }}</p>
+    <input
+      [class.is-valid]="isNameFieldValid"
+      [class.is-invalid]="isNameFieldInvalid"
+      type="text"
+      formControlName="name" />
+    <button (click)="getNameValue()" [disabled]="nameField?.invalid">
+      Get Value
+    </button>
+    <!-- <code>
+      <pre>{{ nameField | json }}</pre>
+    </code> -->
+    <p class="messages" [class.active]="isNameFieldInvalid">
+      <strong *ngIf="nameField?.touched && nameField?.hasError('required')"
+        >Este Campo es requerido</strong>
+    </p>
+    <p class="messages" [class.active]="isNameFieldInvalid">
+      <strong *ngIf="nameField?.touched && nameField?.hasError('maxlength')"
+        >Debe tener maximo 10 caracteres</strong>
+    </p>
+    <p class="messages" [class.active]="isNameFieldInvalid">
+      <strong *ngIf="nameField?.touched && nameField?.hasError('pattern')"
+        >Solo se aceptan letras y espacios</strong>
+    </p>
+  </div>
+
+  <div>
+    <p>Email: {{ emailField?.value }}</p>
+    <!-- <code>
+      <pre>{{ emailField | json }}</pre>
+    </code> -->
+    <input
+      [class.is-valid]="emailField?.valid && emailField?.touched"
+      [class.is-invalid]="emailField?.invalid && emailField?.touched"
+      type="email"
+      formControlName="email" />
+    <p class="messages" [class.active]="emailField?.invalid && emailField?.touched">
+      <strong *ngIf="emailField?.touched && emailField?.hasError('required')"
+        >Este Campo es requerido</strong>
+    </p>
+    <p class="messages" [class.active]="emailField?.invalid && emailField?.touched">
+      <strong *ngIf="emailField?.touched && emailField?.hasError('email')"
+        >El email ingresado no es valido</strong>
+    </p>
+  </div>
+
+  <div>
+    <p>Number: {{ numberField?.value }}</p>
+    <input
+      [class.is-valid]="numberField?.valid && numberField?.touched"
+      [class.is-invalid]="numberField?.invalid && numberField?.touched"
+      type="number"
+      formControlName="number" />
+    <p class="messages" [class.active]="numberField?.invalid && numberField?.touched">
+      <strong *ngIf="numberField?.touched && numberField?.hasError('required')"
+        >Este Campo es requerido</strong>
+    </p>
+    <p class="messages" [class.active]="numberField?.invalid && numberField?.touched">
+      <strong *ngIf="numberField?.touched && numberField?.hasError('min')"
+        >Debe tener minimo 18 anios</strong>
+    </p>
+    <p class="messages" [class.active]="numberField?.invalid && numberField?.touched">
+      <strong *ngIf="numberField?.touched && numberField?.hasError('max')"
+        >Debe tener maximo 99 anios</strong>
+    </p>
+  </div>
+
+  <div>
+    <p>Phone: {{ phoneField?.value }}</p>
+    <input
+      [class.is-valid]="phoneField?.valid && phoneField?.touched"
+      [class.is-invalid]="phoneField?.invalid && phoneField?.touched"
+      type="tel"
+      formControlName="phone" />
+    <p class="messages" [class.active]="phoneField?.invalid && phoneField?.touched">
+      <strong *ngIf="phoneField?.touched && phoneField?.hasError('required')"
+        >Este Campo es requerido</strong
+      >
+    </p>
+  </div>
+
+  <div>
+    <p>Color: {{ colorField?.value }}</p>
+    <input type="color" formControlName="color" />
+  </div>
+
+  <div>
+    <p>Date: {{ dateField?.value }}</p>
+    <input type="date" formControlName="date" />
+  </div>
+
+  <div>
+    <p>Category: {{ categoryField?.value }}</p>
+    <select formControlName="category">
+      <option value="category-1">Category 1</option>
+      <option value="category-2">Category 2</option>
+      <option value="category-3">Category 3</option>
+    </select>
+  </div>
+
+  <div>
+    <p>Tags: {{ tagField?.value }}</p>
+    <select class="tag" formControlName="tag" multiple>
+      <option value="tag-1">tag 1</option>
+      <option value="tag-2">tag 2</option>
+      <option value="tag-3">tag 3</option>
+    </select>
+  </div>
+
+  <div>
+    <p>Agree: {{ agreeField?.value }}</p>
+    <input
+    [class.is-valid]="agreeField?.value === true && agreeField?.touched"
+    [class.is-invalid]="agreeField?.value === false && agreeField?.touched"
+      type="checkbox"
+      formControlName="agree" />
+    <p class="messages" [class.active]="agreeField?.value === false && agreeField?.touched">
+      <strong *ngIf="agreeField?.value === false"
+        >Debe aceptar los terminos</strong>
+    </p>
+  </div>
+
+  <div>
+    <p>Gender: {{ genderField?.value }}</p>
+    <label for="">
+      <input
+        name="gender"
+        type="radio"
+        value="male"
+        formControlName="gender"
+      />
+      Male
+    </label>
+    <label for="">
+      <input
+        name="gender"
+        type="radio"
+        value="female"
+        formControlName="gender"
+      />
+      Female
+    </label>
+    <label for="">
+      <input
+        name="gender"
+        type="radio"
+        value="other"
+        formControlName="gender"
+      />
+      Other
+    </label>
+  </div>
+
+  <div>
+    <p>Zone: {{ zoneField?.value }}</p>
+    <label for="">
+      <input name="zone" type="radio" value="zone-1" formControlName="zone" />
+      Zone 1
+    </label>
+    <label for="">
+      <input name="zone" type="radio" value="zone-2" formControlName="zone" />
+      Zone 2
+    </label>
+    <label for="">
+      <input name="zone" type="radio" value="zone-3" formControlName="zone" />
+      Zone 3
+    </label>
+  </div>
+
+  <div>
+    <button type="submit">Enviar</button>
+  </div>
+
+</form>
+
+<!--
+  <div>
+  <p>Name: {{ nameField.value }}... {{ nameField.valid }}</p>
+  <input
+    [class.is-valid]="isNameFieldValid"
+    [class.is-invalid]="isNameFieldInvalid"
+    type="text"
+    [formControl]="nameField" />
+  <button (click)="getNameValue()" [disabled]="nameField.invalid">
+    Get Value
+  </button>
+  <code>
+    <pre>{{ nameField | json }}</pre>
+  </code>
+  <p class="messages" [class.active]="isNameFieldInvalid">
+    <strong *ngIf="nameField.touched && nameField.hasError('required')"
+      >Este Campo es requerido</strong
+    >
+  </p>
+  <p class="messages" [class.active]="isNameFieldInvalid">
+    <strong *ngIf="nameField.touched && nameField.hasError('maxlength')"
+      >Debe tener maximo 10 caracteres</strong
+    >
+  </p>
+</div>
+-->
+
+<!-- <div>
   <p>Email: {{ emailField.value }}</p>
-  <input type="email" [formControl]="emailField" >
+  <input type="email" [formControl]="emailField" />
 </div>
 
 <div>
   <p>Number: {{ numberField.value }}</p>
-  <input type="number" [formControl]="numberField" >
+  <input type="number" [formControl]="numberField" />
 </div>
 
 <div>
   <p>Phone: {{ phoneField.value }}</p>
-  <input type="tel" [formControl]="phoneField" >
+  <input type="tel" [formControl]="phoneField" />
 </div>
 
 <div>
   <p>Color: {{ colorField.value }}</p>
-  <input type="color" [formControl]="colorField" >
+  <input type="color" [formControl]="colorField" />
 </div>
 
 <div>
   <p>Date: {{ dateField.value }}</p>
-  <input type="date" [formControl]="dateField" >
+  <input type="date" [formControl]="dateField" />
 </div>
 
 <div>
@@ -52,6 +248,52 @@
 
 <div>
   <p>Agree: {{ agreeField.value }}</p>
-  <input type="checkbox" [formControl]="agreeField" >
+  <input type="checkbox" [formControl]="agreeField" />
 </div>
 
+<div>
+  <p>Gender: {{ genderField.value }}</p>
+  <label for="">
+    <input
+      name="gender"
+      type="radio"
+      value="male"
+      [formControl]="genderField"
+    />
+    Male
+  </label>
+  <label for="">
+    <input
+      name="gender"
+      type="radio"
+      value="female"
+      [formControl]="genderField"
+    />
+    Female
+  </label>
+  <label for="">
+    <input
+      name="gender"
+      type="radio"
+      value="other"
+      [formControl]="genderField"
+    />
+    Other
+  </label>
+</div>
+
+<div>
+  <p>Zone: {{ zoneField.value }}</p>
+  <label for="">
+    <input name="zone" type="radio" value="zone-1" [formControl]="zoneField" />
+    Zone 1
+  </label>
+  <label for="">
+    <input name="zone" type="radio" value="zone-2" [formControl]="zoneField" />
+    Zone 2
+  </label>
+  <label for="">
+    <input name="zone" type="radio" value="zone-3" [formControl]="zoneField" />
+    Zone 3
+  </label>
+</div> -->
